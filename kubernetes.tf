@@ -88,7 +88,7 @@ resource "helm_release" "fluxcd" {
   name       = "helm-operator"
   namespace  = "fluxcd"
   repository = "https://fluxcd-community.github.io/helm-charts"
-  version    = "2.3.0"
+  version    = "2.7.0"
   chart      = "flux2"
   depends_on = [
     kubernetes_namespace.fluxcd

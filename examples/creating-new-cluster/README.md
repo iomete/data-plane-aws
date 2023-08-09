@@ -23,7 +23,7 @@ module "data-plane-aws" {
   source                  = "iomete/data-plane-aws/aws"
   version                 = "1.0.0"
   region                  = "us-east-1"  
-  cluster_id              = "kgnwqy"  
+  workspace_id            = "ws_id"  
   lakehouse_role_name 	  = "iomete-lakehouse-role-kgnwqy"
   lakehouse_bucket_name   = "iomete-lakehouse-bucket-kgnwqy"
  
@@ -66,7 +66,7 @@ terraform apply
 | Name | Description | Required |
 | --- | --- | --- |
 |region| AWS region where is cluster will install | Yes |
-|cluster_id| Cluster ID for controle more clusters. Max 10 characters | Yes |
+|workspace_id| Workspace ID from IOMETE control plane when creted new cluster | Yes |
 |lakehouse_role_name| Name of the role that will be used to access the s3 bucket | Yes |
 |lakehouse_bucket_name| Name of the bucket that will be used to store Lakehouse data.  Bucket name must be unique across all existing bucket names in Amazon S3. | Yes |
 |additional_administrators| List of IAM users or roles that can administer the IOMETE stack. If not provided, a new KMS key and Kubernetes auth will be created only for current user | No |

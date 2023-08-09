@@ -21,15 +21,15 @@
 
 module "data-plane-aws" {
   source                    = "iomete/data-plane-aws/aws"
-  version                   = "1.0.0"
+  version                   = "1.1.0"
   region                    = "us-east-1"  
-  cluster_id                = "kgnwqy"  
-
+ 
   # the followings are your lakehouse bucket name and role name to access it
   lakehouse_role_name       = "iomete-lakehouse-role-kgnwqy"
   lakehouse_bucket_name     = "iomete-lakehouse-bucket-kgnwqy"
  
   # optional | the following line gives permission to administrate Kubernetes and KMS
+  # kms_key_arn               = "arn:aws:kms:us-east-1:1234567890:key/your_key_arn"
   # additional_administrators = ["arn:aws:iam::1234567890:user/your_arn", "arn:aws:iam::1234567890:user/user2", "arn:aws:iam::1234567890:user/user3"] 
 }
 ################# 
@@ -38,7 +38,7 @@ module "data-plane-aws" {
 
 output "cluster_name" {
   description = "Kubernetes cluster name"
-  value       = module.cdata-plane-aws.cluster_name
+  value       = module.data-plane-aws.cluster_name
 }
 
 output "cluster_endpoint" {
@@ -68,10 +68,11 @@ terraform apply
 | Name | Description | Required |
 | --- | --- | --- |
 |region| AWS region where is cluster will install | Yes |
-|cluster_id| Cluster ID for controle more clusters. Max 10 characters | Yes |
+|workspace_id| Workspace ID from IOMETE control plane when creted new cluster | Yes |
 |lakehouse_role_name| Name of the role that will be used to access the s3 bucket | Yes |
 |lakehouse_bucket_name| Name of the bucket that will be used to store Lakehouse data.  Bucket name must be unique across all existing bucket names in Amazon S3. | Yes |
 |additional_administrators| List of IAM users or roles that can administer the IOMETE stack. If not provided, a new KMS key and Kubernetes auth will be created only for current user | No |
 |kubernetes_public_access_cidrs| To restrict public access your Kubernetes API need to use IOMETE control-plane IP address. If enable you to have to insert your IP range as well to access Kubernetes. | No |
+|kms_key_arn| The ARN of the KMS key that will be used to encrypt/decrupt the data (ex. EBS). Please provide if using EBS encryption. | No |
 
  

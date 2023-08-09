@@ -1,8 +1,7 @@
 data "aws_availability_zones" "available" {}
 
 locals {
-  eks_cluster_version = "1.24"
-  vpc_cidr            = "10.10.0.0/16"
+   vpc_cidr            = "10.10.0.0/16"
   azs                 = slice(data.aws_availability_zones.available.names, 0, (length(data.aws_availability_zones.available.names) <= 2 ? length(data.aws_availability_zones.available.names) : 3))
   arns                = concat(var.additional_administrators, ["arn:aws:iam::680330367469:role/iomete-eks-operator"])
 }
@@ -13,9 +12,9 @@ locals {
 
 module "eks" {
   source                                       = "terraform-aws-modules/eks/aws"
-  version                                      = "19.5.1"
+  version                                      = "19.15.4"
   cluster_name                                 = local.cluster_name
-  cluster_version                              = local.eks_cluster_version
+  cluster_version                              = var.eks_cluster_version
   kms_key_administrators                       = var.additional_administrators
   vpc_id                                       = module.vpc.vpc_id
   subnet_ids                                   = module.vpc.private_subnets

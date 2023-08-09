@@ -13,6 +13,12 @@ variable "eks_ng_instance_type" {
   default     = "r5a.large"
 }
 
+variable "eks_cluster_version" {
+  description = "EKS cluster version"
+  type        = string
+  default     = "1.25"
+}
+
 variable "volume_size" {
   description = "Cluster node volume size"
   type        = string
@@ -23,6 +29,12 @@ variable "volume_type" {
   description = "Disk mount type"
   type        = string
   default     = "gp3"
+}
+
+variable "kms_key_arn" {
+  description = "KMS key ARN to decrypt, encrypted resources (e.g. EBS volumes)"
+  type        = string
+  default     = "null"
 }
 
 variable "additional_administrators" {
@@ -42,7 +54,6 @@ variable "detailed_monitoring" {
   type        = bool
   default     = false
 }
-
 
 # the followings are your lakehouse bucket name and role name to access it
 variable "lakehouse_role_name" {

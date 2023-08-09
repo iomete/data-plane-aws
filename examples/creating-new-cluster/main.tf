@@ -2,15 +2,18 @@
 
 module "data-plane-aws" {
   source                    = "iomete/data-plane-aws/aws"
-  version                   = "1.0.0"
+  version                   = "1.1.0"
   region                    = "us-east-1"  
-  cluster_id                = "kgnwqy"  
 
   # the followings are your lakehouse bucket name and role name to access it
 	lakehouse_role_name 		  = "iomete-lakehouse-role-kgnwqy"
 	lakehouse_bucket_name     = "iomete-lakehouse-bucket-kgnwqy"
- 
-  #optional | additional_administrators = ["arn:aws:iam::1234567890:user/your_arn", "arn:aws:iam::1234567890:user/user2", "arn:aws:iam::1234567890:user/user3"] # list of IAM users or roles that can administer the KMS key and Kubernetes
+  
+  
+  #optional | 
+  #additional_administrators = ["arn:aws:iam::1234567890:user/your_arn", "arn:aws:iam::1234567890:user/user2", "arn:aws:iam::1234567890:user/user3"] # list of IAM users or roles that can administer the KMS key and Kubernetes
+  #kms_key_arn               = "arn:aws:kms:us-east-1:1234567890:key/your_key_arn"
+
 }
 ################# 
 # Outputs 
