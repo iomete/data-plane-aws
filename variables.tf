@@ -1,3 +1,8 @@
+variable "cluster_name" {
+  type        = string
+  description = "A unique cluster name for IOMETE. It should be unique withing compatible with AWS naming conventions."
+}
+
 variable "region" {
   description = "AWS region where cluster will be created"
   type        = string
@@ -9,10 +14,6 @@ variable "eks_ng_instance_type" {
   default     = "r5a.large"
 }
 
-variable "account_id" {
-  description = "The ID of the account that will be created for IOMETE. This account will be used to create and manage your infrastructure. Please make sure you have valid account ID, otherwise the resource creation will fail."
-  type        = string
-}
 variable "eks_cluster_version" {
   description = "EKS cluster version"
   type        = string
@@ -54,4 +55,3 @@ variable "detailed_monitoring" {
   type        = bool
   default     = false
 }
- 

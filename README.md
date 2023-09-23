@@ -8,28 +8,16 @@
 
 ## Module Usage
 
-### Warning
-
- 
- |⚠ WARNING: If you add additional_administrators, you must add the current user ARN to the list. Otherwise, you will not be able to access the cluster.|
-  | --- |
-
 
 ## Terraform code
 
 ```hcl
-
 module "data-plane-aws" {
   source                    = "iomete/data-plane-aws/aws"
-  version                   = "1.1.1"
-  account_id                = "account_id"
-  region                    = "us-east-1"  
+  version                   = "2.1.0"
  
- 
- 
-  # optional | the following line gives permission to administrate Kubernetes and KMS
-  # kms_key_arn               = "arn:aws:kms:us-east-1:1234567890:key/your_key_arn"
-  # additional_administrators = ["arn:aws:iam::1234567890:user/your_arn", "arn:aws:iam::1234567890:user/user2", "arn:aws:iam::1234567890:user/user3"] 
+  region                    = "us-east-1"
+  cluster_name              = "aws-test1"
 }
 ################# 
 # Outputs 
@@ -49,9 +37,6 @@ output "cluster_certificate_authority_data" {
   description = "Base64 encoded certificate data required to communicate cluster with the IOMETE controlplane"
   value       = module.data-plane-aws.cluster_certificate_authority_data
 }
-
-
-
 ```
 
 ## Terraform Deployment
@@ -61,17 +46,3 @@ terraform init
 terraform plan
 terraform apply
 ```
-
-## Description of variables
-
-| Name | Description | Required |
-| --- | --- | --- |
-|region| AWS region where is cluster will install | Yes |
-|workspace_id| Workspace ID from IOMETE control plane when creted new cluster | Yes |
-|lakehouse_role_name| Name of the role that will be used to access the s3 bucket | Yes |
-|lakehouse_bucket_name| Name of the bucket that will be used to store Lakehouse data.  Bucket name must be unique across all existing bucket names in Amazon S3. | Yes |
-|additional_administrators| List of IAM users or roles that can administer the IOMETE stack. If not provided, a new KMS key and Kubernetes auth will be created only for current user | No |
-|kubernetes_public_access_cidrs| To restrict public access your Kubernetes API need to use IOMETE control-plane IP address. If enable you to have to insert your IP range as well to access Kubernetes. | No |
-|kms_key_arn| The ARN of the KMS key that will be used to encrypt/decrupt the data (ex. EBS). Please provide if using EBS encryption. | No |
-
- 
