@@ -17,7 +17,7 @@ module "data-plane-aws" {
   version                   = "2.1.0"
  
   region                    = "us-east-1"
-  cluster_name              = "aws-test1"
+  cluster_name              = "lakehouse-dev"
 }
 
 ################# 
