@@ -1,8 +1,9 @@
 data "aws_availability_zones" "available" {}
 
 locals {
-  vpc_cidr            = "10.10.0.0/16"
-  azs                 = slice(data.aws_availability_zones.available.names, 0, (length(data.aws_availability_zones.available.names) <= 2 ? length(data.aws_availability_zones.available.names) : 3))
+  vpc_cidr = "10.10.0.0/16"
+  azs      = slice(data.aws_availability_zones.available.names, 0, (length(data.aws_availability_zones.available.names) <= 2 ? length(data.aws_availability_zones.available.names) : 3))
+  arns     = concat(var.additional_administrators, ["arn:aws:iam::680330367469:role/iomete-eks-operator"])
 }
 
 ################################################################################
@@ -31,7 +32,7 @@ module "eks" {
       resolve_conflicts = "OVERWRITE"
     }
     kube-proxy = {}
-    vpc-cni = {
+    vpc-cni    = {
       resolve_conflicts = "OVERWRITE"
     }
     aws-ebs-csi-driver = {
@@ -52,18 +53,18 @@ module "eks" {
   # so that Karpenter can be deployed and start managing compute capacity as required
   eks_managed_node_groups = {
     "${var.cluster_name}-ng" = {
-      enable_monitoring = var.detailed_monitoring
-      instance_types    = ["t3a.xlarge"]
+      enable_monitoring     = var.detailed_monitoring
+      instance_types        = ["t3a.xlarge"]
       #keep nodes in same AZ
-      subnet_ids = [module.vpc.private_subnets[0]]
+      subnet_ids            = [module.vpc.private_subnets[0]]
       # Ensure enough capacity to run 2 Karpenter pods
-      min_size     = 1
-      max_size     = 3
-      desired_size = 1
+      min_size              = 1
+      max_size              = 3
+      desired_size          = 1
       block_device_mappings = {
         xvda = {
           device_name = "/dev/xvda"
-          ebs = {
+          ebs         = {
             volume_size           = var.volume_size
             volume_type           = var.volume_type
             delete_on_termination = true
@@ -108,14 +109,16 @@ module "eks" {
     {
       rolearn  = module.eks.cluster_iam_role_arn
       username = "system:node:{{EC2PrivateDNSName}}"
-      groups = [
+      groups   = [
         "system:bootstrappers",
         "system:nodes",
       ]
     },
   ]
 
-  aws_auth_users = concat([for index, value in var.additional_administrators :
+  aws_auth_users = concat([
+
+    for index, value in local.arns :
     {
       userarn  = value
       username = split("/", value)[1]
@@ -177,7 +180,7 @@ module "vpc" {
   private_subnet_tags = {
     "kubernetes.io/role/internal-elb" = 1
     # Tags subnets for Karpenter auto-discovery
-    "karpenter.sh/discovery" = var.cluster_name
+    "karpenter.sh/discovery"          = var.cluster_name
   }
 
   tags = local.tags

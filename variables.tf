@@ -8,6 +8,12 @@ variable "region" {
   type        = string
 }
 
+variable "lakehouse_bucket_name" {
+  description = "A bucket name for IOMETE lakehouse. It should be unique withing compatible with AWS naming conventions."
+  type        = string
+  default     = "" # if empty, name will be generated as this formula: ${var.cluster_name}-lakehouse-role
+}
+
 variable "eks_ng_instance_type" {
   description = "EKS main node group instance type"
   type        = string
