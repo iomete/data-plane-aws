@@ -55,7 +55,7 @@ output "cluster_certificate_authority_data" {
 }
 ```
 
-### Run terraform
+####  Run terraform
 
 Once you have the terraform file, and configured it according to your needs, you can run the following commands to create the data-plane infrastructure:
 
