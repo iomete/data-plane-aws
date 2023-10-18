@@ -19,6 +19,7 @@ module "data-plane-aws" {
   region                    = "us-east-1"
   cluster_name              = "aws-test1"
 }
+
 ################# 
 # Outputs 
 #################
