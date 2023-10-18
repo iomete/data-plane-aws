@@ -9,7 +9,9 @@
 ## Module Usage
 
 
-## Terraform code
+## Data plane installation
+
+Create a new folder and create a file (e.g. iomete-terraform.tf) with the following content:
 
 ```hcl
 module "data-plane-aws" {
@@ -40,10 +42,17 @@ output "cluster_certificate_authority_data" {
 }
 ```
 
-## Terraform Deployment
+## Run terraform
+
+To run Terraform, execute the following commands in your terminal:
 
 ```shell
-terraform init
+# Initialize Terraform
+terraform init --upgrade
+
+# Create a plan
 terraform plan
+
+# Apply the changes to your AWS account
 terraform apply
 ```
