@@ -16,7 +16,7 @@ Make sure you have the following tools installed on your machine:
 - [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 
 
-### Installation
+### Configure Terraform file
 
 Create a new folder and create a file (e.g. `iomete-terraform.tf`) with the following content:
 
@@ -55,7 +55,7 @@ output "cluster_certificate_authority_data" {
 }
 ```
 
-####  Run terraform
+###  Run terraform
 
 Once you have the terraform file, and configured it according to your needs, you can run the following commands to create the data-plane infrastructure:
 
