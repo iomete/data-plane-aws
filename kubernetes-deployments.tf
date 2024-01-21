@@ -36,7 +36,7 @@ resource "kubernetes_namespace" "iomete-system" {
 
 resource "kubernetes_secret" "data-plane-secret" {
   metadata {
-    name = "iomete-data-plane-secret"
+    name = "iomete-cloud-settings"
     namespace = "iomete-system"
   }
 

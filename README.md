@@ -26,7 +26,7 @@ Create a new folder and create a file (e.g. `iomete-terraform.tf`) with the foll
 ```hcl
 module "data-plane-aws" {
   source                    = "iomete/data-plane-aws/aws"
-  version                   = "~> 2.1.1"
+  version                   = "~> 2.2.0"
   # AWS region where cluster will be created
   region                    = "us-east-1"
   # Cluster name. EKS cluster and other resource names will be prefixed with this name.
